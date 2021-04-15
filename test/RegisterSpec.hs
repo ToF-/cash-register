@@ -11,4 +11,4 @@ spec = do
                 inp = return "42"
                 run = register inp out
                 result = lines (snd (runWriter run))
-            result `shouldBe` ["42.00"]
+            result `shouldBe` ["you entered 42"]
