@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import Register
 
 main :: IO ()
-main = someFunc
+main = register getLine putStrLn

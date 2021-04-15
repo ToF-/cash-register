@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 981310283d688e30d6c6496b240ca7c44d8d6bf4ec9cf2342b1c799c9151c8c1
+-- hash: 9ab8ee14c7c31a21cf78ba37b87e95d0312d1da6f41aa6233eeb9219b14153f4
 
 name:           cash-register
 version:        0.1.0.0
@@ -28,12 +28,14 @@ source-repository head
 library
   exposed-modules:
       Lib
+      Register
   other-modules:
       Paths_cash_register
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
+    , split
   default-language: Haskell2010
 
 executable cash-register-exe
@@ -46,12 +48,14 @@ executable cash-register-exe
   build-depends:
       base >=4.7 && <5
     , cash-register
+    , split
   default-language: Haskell2010
 
 test-suite cash-register-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      RegisterSpec
       Paths_cash_register
   hs-source-dirs:
       test
@@ -59,4 +63,7 @@ test-suite cash-register-test
   build-depends:
       base >=4.7 && <5
     , cash-register
+    , hspec
+    , mtl
+    , split
   default-language: Haskell2010
