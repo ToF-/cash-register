@@ -22,11 +22,14 @@ readMoney s = case splitOn "." s of
                 [] -> error "readMoney: empty argument"
 
     where
-        readMoneyWithCents [] [c] = Money $ (read [c]) * 10
-        readMoneyWithCents [] cs  = Money $ read (take 2 cs)
-        readMoneyWithCents i []  = Money $ (read i) * 100
-        readMoneyWithCents i [c] = Money $ (read i) * 100 + (read [c]) * 10
-        readMoneyWithCents i cs  = Money $ (read i) * 100 + (read (take 2 cs))
+        readMoneyWithCents [] [c] = mkMoney 0 (read [c] * 10)
+        readMoneyWithCents [] cs  = mkMoney 0 (read (take 2 cs))
+        readMoneyWithCents i []  =  mkMoney (read i) 0
+        readMoneyWithCents i [c] =  mkMoney (read i) (read [c] * 10)
+        readMoneyWithCents i cs  =  mkMoney (read i) (read (take 2 cs))
+
+mkMoney :: Integer -> Integer -> Money
+mkMoney units cents = Money $ units * 100 + cents
 
 showMoney :: Money -> String
 showMoney (Money value) = printf "%d.%02d" (value `div` 100) (value `mod` 100)
