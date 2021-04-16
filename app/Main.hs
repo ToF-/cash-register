@@ -1,6 +1,6 @@
 module Main where
 
-import Register
+import Register (Money (..), register)
 
 main :: IO ()
-main = register getLine putStrLn
+main = register (Money 0) getLine putStrLn

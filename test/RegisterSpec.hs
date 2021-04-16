@@ -9,9 +9,16 @@ spec = do
         it "can input a single price" $ do
             let out = \s -> writer ((), s)
                 inp = return "42"
-                run = register inp out
+                run = register (Money 0) inp out
                 result = lines (snd (runWriter run))
             result `shouldBe` ["42.00"]
+
+        it "can add amounts, printing the total" $ do
+            let out = \s -> writer ((), s)
+                inp = return "17"
+                run = register (Money 4200) inp out
+                result = lines (snd (runWriter run))
+            result `shouldBe` ["59.00"]
 
     describe "money" $ do
         it "can be read and shown" $ do

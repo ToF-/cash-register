@@ -1,4 +1,4 @@
-module Register (register, readMoney, showMoney)
+module Register (Money (..), register, readMoney, showMoney)
     where
 
 import Text.Printf     (printf)
@@ -8,12 +8,18 @@ data Money = Money Integer
     deriving (Eq, Show)
 
 register :: Monad m =>
-    (m String)             -- an input function
+    Money
+    -> (m String)             -- an input function
     -> (String -> m ())    -- an output function
     -> m ()                -- result in the same monad
-register inputFunction outputFunction = do
+register (Money total) inputFunction outputFunction = do
     s <- inputFunction
-    outputFunction (showMoney (readMoney s))
+    case s of 
+      "" -> outputFunction (showMoney (Money total))
+      s -> do
+          let (Money value) = readMoney s
+          outputFunction (showMoney (Money (total + value)))
+
 
 readMoney :: String -> Money
 readMoney s = case splitOn "." s of
