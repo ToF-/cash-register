@@ -11,4 +11,9 @@ spec = do
                 inp = return "42"
                 run = register inp out
                 result = lines (snd (runWriter run))
-            result `shouldBe` ["you entered 42"]
+            result `shouldBe` ["42.00"]
+
+    describe "money" $ do
+        it "can be read and shown" $ do
+            let m = readMoney "42"
+            showMoney m `shouldBe` "42.00"
